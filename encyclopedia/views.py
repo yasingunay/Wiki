@@ -40,6 +40,7 @@ def search(request):
             # If the query does not match the name of an encyclopedia entry, 
             # the user should instead be taken to a search results page 
             # that displays a list of all encyclopedia entries that have the query as a substring. 
+            # Clicking on any of the entry names on the search results page should take the user to that entry’s page.
             for entry in list_entries():
                 if query.lower()in entry.lower():
                     sub_entries.append(entry)
