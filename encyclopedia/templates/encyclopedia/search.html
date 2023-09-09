@@ -1,0 +1,22 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+   Search - Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>No result for "{{ query }}"</h1>
+    <hr>
+    {% if entries %}
+    <h2>Suggestion page(s) for "{{ query }}"": </h2>
+    <ul>
+        {% for entry in entries %}
+        <li>{{ entry }}</li>
+        {% empty %}
+            <li>No suggestion!</li>
+        {% endfor %}
+
+    </ul>
+    {% endif %}
+
+{% endblock %}
