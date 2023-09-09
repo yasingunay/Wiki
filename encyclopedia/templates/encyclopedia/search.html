@@ -11,7 +11,7 @@
     <h2>Suggestion page(s) for "{{ query }}"": </h2>
     <ul>
         {% for entry in entries %}
-        <li>{{ entry }}</li>
+        <li><a href="/wiki/{{ entry }}">{{ entry }}</a></li>
         {% empty %}
             <li>No suggestion!</li>
         {% endfor %}
