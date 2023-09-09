@@ -1,9 +1,12 @@
 {% extends "encyclopedia/layout.html" %}
 {% block title %}
-    {{ header }} - Encyclopedia
+    {{ title }} - Encyclopedia
 {% endblock %}
 
 {% block body %}
-    <div>{{ html_content|safe }}</div>
+    {{ header|safe }}
+    <hr>
+    <div>{{ main_content|safe }}</div>
+    <hr>
 
 {% endblock %}

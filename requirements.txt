@@ -1,1 +1,11 @@
 markdown2
+
+
+
+
+  pattern = r'<h1>(.*?)<\/h1>'
+    for line in html_content.splitlines():
+        match = re.search(pattern, line)
+        if match:
+            header = match.group(1)
+            break

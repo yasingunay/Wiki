@@ -21,7 +21,8 @@ def entry(request, title):
         return render(request, "encyclopedia/error.html")
     else:
         html_content = markdown_to_html(title)
-        header = separate_markdown_content(html_content)
-        return render(request, "encyclopedia/entry.html", {"html_content" : html_content, "header": header})
+        header, main_content = separate_markdown_content(html_content)
+        print(header)
+        return render(request, "encyclopedia/entry.html", {"header": header, "main_content": main_content, "title" : title})
     
         

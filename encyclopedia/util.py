@@ -48,10 +48,13 @@ def markdown_to_html(title):
 
 
 def separate_markdown_content(html_content):
-    pattern = r'<h1>(.*?)<\/h1>'
-    for line in html_content.splitlines():
-        match = re.search(pattern, line)
-        if match:
-            header = match.group(1)
-            return header
+    lines = html_content.splitlines()
+
+    # Separate the first line and the rest of the lines
+    header = lines[0]
+    main_content = '\n'.join(lines[1:])
+    
+    return(header, main_content)
+            
+
     
