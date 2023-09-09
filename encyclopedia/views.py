@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .util import get_entry
+from .util import markdown_to_html
+from .util import get_entry, separate_markdown_content
+
+import markdown
 
 from . import util
 
@@ -17,7 +20,8 @@ def entry(request, title):
     if not get_entry(title):
         return render(request, "encyclopedia/error.html")
     else:
-        print(type(get_entry(title)))
-        return render(request, "encyclopedia/error.html")
+        html_content = markdown_to_html(title)
+        header = separate_markdown_content(html_content)
+        return render(request, "encyclopedia/entry.html", {"html_content" : html_content, "header": header})
     
         

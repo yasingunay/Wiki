@@ -2,6 +2,7 @@ import re
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+import markdown
 
 
 def list_entries():
@@ -37,6 +38,20 @@ def get_entry(title):
         return None
 
 
-def split_content(str):
-    ...
+def markdown_to_html(title):
+    # Read Markdown content from a file or a database field
+    markdown_content = get_entry(title)
+
+    # Convert Markdown to HTML
+    html_content = markdown.markdown(markdown_content)
+    return html_content
+
+
+def separate_markdown_content(html_content):
+    pattern = r'<h1>(.*?)<\/h1>'
+    for line in html_content.splitlines():
+        match = re.search(pattern, line)
+        if match:
+            header = match.group(1)
+            return header
     
