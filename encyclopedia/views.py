@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponse
 from .util import get_entry, list_entries, save_entry
 import markdown2
+from random import choice
 
 
 def index(request):
@@ -56,7 +57,7 @@ def search(request):
 
 def create(request):
     if request.method == "GET":
-        return render(request, "encyclopedia/create.html") 
+        return render(request, "encyclopedia/create.html")
     else:
         title = request.POST.get("title")
         description = request.POST.get("description")
@@ -80,14 +81,17 @@ def edit(request, title):
     if request.method == "GET":
         content = get_entry(title)
         return render(
-                request, "encyclopedia/edit.html", {"content": content, "title": title}
-            )
+            request, "encyclopedia/edit.html", {"content": content, "title": title}
+        )
     else:
         new_title = request.POST.get("new_title")
         new_description = request.POST.get("new_description")
         lowercase_entries = [item.lower() for item in list_entries()]
         # Check new_title already exists
-        if new_title.lower() not in lowercase_entries or new_title.lower() == title.lower():
+        if (
+            new_title.lower() not in lowercase_entries
+            or new_title.lower() == title.lower()
+        ):
             title = new_title
             description = new_description
             save_entry(title, description)
@@ -101,3 +105,10 @@ def edit(request, title):
                     "message": "The encyclopedia entry already exists with the provided title"
                 },
             )
+
+
+def random(request):
+    if request.method == "GET":
+        # Choose a random encyclopedia entry.
+        random_entry_title = choice(list_entries())
+        return redirect("entry", title=random_entry_title)
