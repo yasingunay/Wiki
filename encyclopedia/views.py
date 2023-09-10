@@ -31,8 +31,9 @@ def search(request):
     sub_entries = []
     if request.method == "POST":
         query = request.POST["q"]
+        lowercase_entries = [item.lower() for item in list_entries()]
         # If the query matches the name of an encyclopedia entry, the user should be redirected to that entry’s page.
-        if query in list_entries():
+        if query.lower() in lowercase_entries:
             content = markdown2.markdown(get_entry(query))
             return render(
                 request, "encyclopedia/entry.html", {"content": content, "title": query}

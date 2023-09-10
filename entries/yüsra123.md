@@ -1,5 +1,0 @@
-salesforce admın brova
-
-
-
-# YUSRA
