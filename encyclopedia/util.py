@@ -38,23 +38,4 @@ def get_entry(title):
         return None
 
 
-def markdown_to_html(title):
-    # Read Markdown content from a file or a database field
-    markdown_content = get_entry(title)
 
-    # Convert Markdown to HTML
-    html_content = markdown2.markdown(markdown_content)
-    return html_content
-
-
-# def separate_markdown_content(html_content):
-#     lines = html_content.splitlines()
-
-#     # Separate the first line and the rest of the lines
-#     header = lines[0]
-#     main_content = '\n'.join(lines[1:])
-    
-#     return(header, main_content)
-            
-
-    

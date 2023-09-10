@@ -10,9 +10,11 @@
     </head>
     <body>
         <div class="row">
-            <div class="sidebar col-lg-2 col-md-3">
+            <div class="sidebar col-lg-2 col-md-3" style="text-align: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Wikipedia_logo_%28svg%29.svg"
+                alt="Wikipedia logo" width="100%" >
                 <h2>Wiki</h2>
-                <form action="{% url 'search' %}" method="post">
+                <form action="{% url 'search' %}" method="POST">
                     {% csrf_token %}
                     <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
                 </form>

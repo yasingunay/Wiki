@@ -6,7 +6,7 @@
 {% block body %}
     <h1>Create New Page</h1>
     <hr> 
-    <form method="post" method="post">
+    <form method="POST" action="{% url 'create' %}">
         {% csrf_token %}
         <input type="text" name="title" style="width: 100%; margin-bottom: 10px;" placeholder="Title"><br>
         <textarea name="description" style="width: 100%; height: 50vh;" placeholder="Descriptions (Use markdown syntax)"></textarea>

@@ -4,5 +4,8 @@
 {% endblock %}
 
 {% block body %}
+    
     <div class="border-bottom mb-3" name="content">{{ content | safe }}</div>
+    <a href="{% url 'edit' title=title %}" class="btn btn-secondary">Edit Page</a>
+
 {% endblock %}
