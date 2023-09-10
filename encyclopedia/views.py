@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django import forms
 from django.http import HttpResponse
-from .util import markdown_to_html
-from .util import get_entry, separate_markdown_content, list_entries
+from .util import get_entry,list_entries,save_entry
+import markdown2
 
 import markdown
 
@@ -19,13 +19,13 @@ def entry(request, title):
     # If an entry is requested that does not exist, 
     # the user should be presented with an error page indicating that their requested page was not found.
     if not get_entry(title):
-        return render(request, "encyclopedia/error.html")
+        return render(request, "encyclopedia/error.html", {"message":  "The page you requested was not found."})
     else:
        #  If the entry does exist, the user should be presented with a page that displays the content of the entry. 
-        html_content = markdown_to_html(title)
-        header, main_content = separate_markdown_content(html_content)
-        return render(request, "encyclopedia/entry.html", {"header": header, "main_content": main_content, "title" : title})  # The title of the page should include the name of the entry.
+        content = markdown2.markdown(get_entry(title))
+        return render(request, "encyclopedia/entry.html", { "content": content, "title" : title})  # The title of the page should include the name of the entry.
     
+
         
 def search(request):
     sub_entries= []
@@ -33,9 +33,8 @@ def search(request):
         query = request.POST["q"]
         # If the query matches the name of an encyclopedia entry, the user should be redirected to that entry’s page.
         if query in list_entries():
-            html_content = markdown_to_html(query)
-            header, main_content = separate_markdown_content(html_content)
-            return render(request, "encyclopedia/entry.html", {"header": header, "main_content": main_content, "title" : query})
+            content = markdown2.markdown(get_entry(query))
+            return render(request, "encyclopedia/entry.html", {"content": content, "title" : query})
         else:
             # If the query does not match the name of an encyclopedia entry, 
             # the user should instead be taken to a search results page 
@@ -44,11 +43,24 @@ def search(request):
             for entry in list_entries():
                 if query.lower()in entry.lower():
                     sub_entries.append(entry)
-            return render(request, "encyclopedia/search.html", {"entries": sub_entries, "query" : query})
-            
-           
+            return render(request, "encyclopedia/search.html", {"entries": sub_entries, "query" : query})       
     else:
         # Handle GET request
         return render(request, "encyclopedia/index.html")
 
     
+
+
+def create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        lowercase_entries = [item.lower() for item in list_entries()]
+        # Check encyclopedia entry already exists case-insensetively
+        if title.lower() not in lowercase_entries:
+            save_entry(title, description)
+            return redirect('entry', title=title)
+        else:
+            # If an encyclopedia entry already exists with the provided title, show error message.
+            return render(request, "encyclopedia/error.html", {"message" : "The encyclopedia entry already exists with the provided title"})
+    return render(request, "encyclopedia/create.html")

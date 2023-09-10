@@ -2,7 +2,7 @@ import re
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-import markdown
+import markdown2
 
 
 def list_entries():
@@ -43,18 +43,18 @@ def markdown_to_html(title):
     markdown_content = get_entry(title)
 
     # Convert Markdown to HTML
-    html_content = markdown.markdown(markdown_content)
+    html_content = markdown2.markdown(markdown_content)
     return html_content
 
 
-def separate_markdown_content(html_content):
-    lines = html_content.splitlines()
+# def separate_markdown_content(html_content):
+#     lines = html_content.splitlines()
 
-    # Separate the first line and the rest of the lines
-    header = lines[0]
-    main_content = '\n'.join(lines[1:])
+#     # Separate the first line and the rest of the lines
+#     header = lines[0]
+#     main_content = '\n'.join(lines[1:])
     
-    return(header, main_content)
+#     return(header, main_content)
             
 
     

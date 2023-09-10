@@ -4,9 +4,5 @@
 {% endblock %}
 
 {% block body %}
-    {{ header|safe }}
-    <hr>
-    <div>{{ main_content|safe }}</div>
-    <hr>
-
+    <div class="border-bottom mb-3" name="content">{{ content | safe }}</div>
 {% endblock %}
